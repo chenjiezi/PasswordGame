@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const app = {
+        // 比较获得可能性的结果
+        compare(guess, permutations) {
+          const result = []
+
+          for (let p of permutations) {
+            let A = 0
+            let B = 0
+            
+            
+          }
+
+          return result
+        },
+        // 全排列生成器
+        generatePermutations(numbers, selectedNumbers) {
+          if (selectedNumbers === 1) {
+            return numbers.map((num) => [num]);
+          }
+
+          const permutations = [];
+
+          numbers.forEach((num, index) => {
+            const remainingNumbers = numbers
+              .slice(0, index)
+              .concat(numbers.slice(index + 1));
+            const innerPermutations = this.generatePermutations(
+              remainingNumbers,
+              selectedNumbers - 1
+            );
+            const currentPermutations = innerPermutations.map((perm) =>
+              [num].concat(perm)
+            );
+            permutations.push(...currentPermutations);
+          });
+
+          return permutations;
+        }
+      };
+
+      const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const selectedNumbers = 5;
+
+      const permutations = app.generatePermutations(numbers, selectedNumbers);
+      const guess = [
+        {
+          num: [0, 1, 2, 3, 4],
+          A: 0,
+          B: 4,
+        },
+        {
+          num: [1, 2, 3, 4, 5],
+          A: 1,
+          B: 4,
+        },
+        //   {
+        //     num: [1, 3, 4, 5, 2],
+        //     A: 1,
+        //     B: 4,
+        //   },
+        //   {
+        //     num: [3, 4, 5, 2, 1],
+        //     A: 1,
+        //     B: 4,
+        //   },
+      ];
+
+      guess.forEach((g, index) => {
+        const p = index === 0 ? permutations : guess[index - 1].result
+        g.result = app.compare(g, p);
+        console.log(`Times${index + 1}`, g.result);
+      })
+    </script>
+  </body>
+</html>
