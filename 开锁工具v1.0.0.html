@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      .w-200px {
+        width: 200px;
+      }
+      .w-100px {
+        width: 100px;
+      }
+      .item {
+        margin-bottom: 8px;
+      }
+      .ipt-num {
+        margin-right: 24px;
+      }
+      .tips {
+        margin-left: 12px;
+      }
+    </style>
+    <title>开锁工具</title>
+  </head>
+  <body>
+    <div class="m-4">
+      <div class="content">
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第一次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第二次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第三次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第四次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第五次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第六次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第七次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第八次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第九次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+        <div class="item">
+          <input
+            type="text"
+            placeholder="第十次猜想数字"
+            class="ipt-num w-200px"
+          />
+          <span>★：</span><input type="number" class="ipt-a w-100px" />
+          <span>☆：</span><input type="number" class="ipt-b w-100px" />
+          <span class="tips"></span>
+        </div>
+      </div>
+      <div class="tool-btn mt-4">
+        <button type="button" class="btn btn-primary" id="start">计算</button>
+        <button type="button" class="btn btn-secondary" id="reset">重置</button>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const app = {
+        // 计算结果集
+        calculate(guess, permutations) {
+          // debugger
+          const { num, A, B } = guess;
+          const result = [];
+
+          for (let p of permutations) {
+            let _A = 0;
+            let _B = 0;
+
+            const numArr = num.split("").map((item) => Number(item));
+
+            numArr.forEach((n, index) => {
+              if (n === p[index]) {
+                _A++;
+              }
+            });
+
+            for (let i = 0; i < numArr.length; i++) {
+              for (let j = 0; j < p.length; j++) {
+                if (numArr[i] === p[j] && i !== j) {
+                  _B++;
+                }
+              }
+            }
+
+            if (_A === A && _B === B) {
+              result.push(p);
+            }
+          }
+
+          return result;
+        },
+        // 全排列生成器
+        generatePermutations(numbers, selectedNumbers) {
+          if (selectedNumbers === 1) {
+            return numbers.map((num) => [num]);
+          }
+
+          const permutations = [];
+
+          numbers.forEach((num, index) => {
+            const remainingNumbers = numbers
+              .slice(0, index)
+              .concat(numbers.slice(index + 1));
+            const innerPermutations = this.generatePermutations(
+              remainingNumbers,
+              selectedNumbers - 1
+            );
+            const currentPermutations = innerPermutations.map((perm) =>
+              [num].concat(perm)
+            );
+            permutations.push(...currentPermutations);
+          });
+
+          return permutations;
+        },
+        checkForm(index) {
+          const IptNum = document.querySelectorAll(".ipt-num")[index];
+          const IptA = document.querySelectorAll(".ipt-a")[index];
+          const IptB = document.querySelectorAll(".ipt-b")[index];
+          const IptNumValue = IptNum.value.trim();
+          const IptAValue = IptA.value.trim();
+          const IptBValue = IptB.value.trim();
+
+          if (
+            IptNumValue === "" ||
+            isNaN(IptNumValue) ||
+            IptNumValue.length !== 5
+          ) {
+            return false;
+          }
+
+          if (
+            IptAValue === "" ||
+            isNaN(IptAValue) ||
+            IptAValue < 0 ||
+            IptAValue > 5
+          ) {
+            return false;
+          }
+          if (
+            IptBValue === "" ||
+            isNaN(IptBValue) ||
+            IptBValue < 0 ||
+            IptBValue > 5
+          ) {
+            return false;
+          }
+          if (Number(IptAValue) + Number(IptBValue) > 5) {
+            return false;
+          }
+
+          return true;
+        },
+        setTips(guess) {
+          const tipsEle = document.querySelectorAll(".tips");
+          for (let i = 0; i < tipsEle.length; i++) {
+            const res = guess[i]?.result;
+            if (res && res.length > 0) {
+              const resStr =
+                res.length > 3
+                  ? res
+                      .slice(0, 3)
+                      .map((item) => item.join(""))
+                      .join(",") + ",..."
+                  : res.map((item) => item.join("")).join(",");
+              tipsEle[i].innerHTML = `${res.length}种可能性答案：${resStr}`;
+            } else {
+              tipsEle[i].innerHTML = "";
+            }
+          }
+        },
+        resetTips() {
+          const tipsEle = document.querySelectorAll(".tips");
+          for (let i = 0; i < tipsEle.length; i++) {
+            tipsEle[i].innerHTML = "";
+          }
+        },
+        resetForm() {
+          const IptNum = document.querySelectorAll(".ipt-num");
+          const IptA = document.querySelectorAll(".ipt-a");
+          const IptB = document.querySelectorAll(".ipt-b");
+
+          for (let i = 0; i < IptNum.length; i++) {
+            IptNum[i].value = "";
+            IptA[i].value = "";
+            IptB[i].value = "";
+          }
+        },
+      };
+
+      const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const selectedNumbers = 5;
+      // 生成所有排列
+      const permutations = app.generatePermutations(numbers, selectedNumbers);
+
+      const startBtn = document.getElementById("start");
+      const resetBtn = document.getElementById("reset");
+
+      // 计算
+      startBtn.onclick = function () {
+        console.log("===================计算==================");
+        const guess = [];
+
+        let i = 0;
+        while (i < 10) {
+          if (!app.checkForm(i)) {
+            break;
+          }
+
+          guess.push({
+            num: document.querySelectorAll(".ipt-num")[i].value,
+            A: Number(document.querySelectorAll(".ipt-a")[i].value),
+            B: Number(document.querySelectorAll(".ipt-b")[i].value),
+          });
+
+          // 计算结果集
+          const p = i === 0 ? permutations : guess[i - 1].result;
+          guess[i].result = app.calculate(guess[i], p);
+          console.log(`Times${i + 1}`, guess[i].result);
+
+          i++;
+        }
+
+        app.setTips(guess);
+      };
+      // 重置
+      resetBtn.onclick = function () {
+        console.log("===================重置==================");
+        app.resetTips();
+        app.resetForm();
+      };
+    </script>
+  </body>
+</html>
